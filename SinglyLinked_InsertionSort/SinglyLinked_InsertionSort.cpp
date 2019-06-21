@@ -1,6 +1,4 @@
-/* Source Code: 
-	https://www.geeksforgeeks.org/insertion-sort-for-singly-linked-list/
-*/
+/*Berhasil dicompile dengan Compiler bawaan Visual Studio 2019*/
 #include <iostream>
 #include <conio.h>
 #include<stdio.h> 
