@@ -1,9 +1,11 @@
 /* Source Code: 
 	https://www.geeksforgeeks.org/insertion-sort-for-singly-linked-list/
 */
-
+#include <iostream>
+#include <conio.h>
 #include<stdio.h> 
 #include<stdlib.h> 
+using namespace std;
 
 /*Link list Node */
 struct Node
@@ -37,13 +39,15 @@ void insertionSort(struct Node** head_ref) // Fungsi untuk mengurutkan LinkedLis
 	*head_ref = sorted;
 }
 
-/* function to insert a new_node in a list. Note that this
-function expects a pointer to head_ref as this can modify the
-head of the input linked list (similar to push())*/
+
+//prosedur untuk menyisipkan Node baru kedalam list.
 void sortedInsert(struct Node** head_ref, struct Node* new_node)
 {
 	struct Node* current;
-	/* Special case for the head end */
+	/*
+	Jika pointer awal (head_ref) NULL atau datanya lebih besar atau sama dengan data Node baru, maka
+	Pointer Node baru selanjutnya akan diset ke head_ref, dan Node baru akan masuk ke depan (head_ref).
+	*/
 	if (*head_ref == NULL || (*head_ref)->data >= new_node->data)
 	{
 		new_node->next = *head_ref;
@@ -51,32 +55,38 @@ void sortedInsert(struct Node** head_ref, struct Node* new_node)
 	}
 	else
 	{
-		/* Locate the node before the point of insertion */
+		//Mengarahkan pointer current ke posisi yangakan diselipkan.
 		current = *head_ref;
+		/*
+		Melakukan perulangan selama alamat LinkedList berikutnya bukan NULL, dan
+		data LinkedList berikutnya lebih kecil dari node baru;
+		*/
 		while (current->next != NULL &&
 			current->next->data < new_node->data)
 		{
-			current = current->next;
+			current = current->next; //menujukan current ke alamat berikutnya.
 		}
-		new_node->next = current->next;
-		current->next = new_node;
+		new_node->next = current->next; 
+		current->next = new_node; //menyelipkan Node baru ke Pointer current->next.
 	}
 }
 
-/* BELOW FUNCTIONS ARE JUST UTILITY TO TEST sortedInsert */
 
-/* Function to print linked list */
+//Fungsi untuk menampilkan LinkedList.
 void printList(struct Node* head)
 {
 	struct Node* temp = head;
+	/*
+	Melakukan perulangan sampai mencapai ujung LinkedList;
+	*/
 	while (temp != NULL)
 	{
-		printf("%d ", temp->data);
-		temp = temp->next;
+		printf("%d ", temp->data); //menampilkan data;
+		temp = temp->next; //temp ditujukan ke alamat berikutnya.
 	}
 }
 
-/* A utility function to insert a node at the beginning of linked list */
+//Fungsi untuk menambah Node LinkedList.
 void push(struct Node** head_ref, int new_data)
 {
 	/* allocate node */
@@ -92,24 +102,46 @@ void push(struct Node** head_ref, int new_data)
 	(*head_ref) = new_node;
 }
 
-
-// Main function
 int main()
 {
-	struct Node* a = NULL;
-	push(&a, 5);
-	push(&a, 20);
-	push(&a, 4);
-	push(&a, 3);
-	push(&a, 30);
+	int p;	//variable untuk menampung pilihan;
+	int nilai; //variable untuk menampung nilai baru;
+	struct Node* a = NULL; //Pointer Node a;
 
-	printf("Linked List before sorting \n");
-	printList(a);
 
-	insertionSort(&a);
+	do {
+		system("cls"); //membersihkan layar.
+		cout << "Pilih Aksi" << endl;
+		cout << "=============================" << endl;
+		cout << "1. Masukan Data" << endl;
+		cout << "2. Tampilkan Data Sebelum Sort" << endl;
+		cout << "3. Tampilkan Data Setelah Sort" << endl;
+		cout << "Pilihan anda : ";
+		cin >> p; //membaca input.
 
-	printf("\nLinked List after sorting \n");
-	printList(a);
+		switch (p) { //menjalankan instruksi berdasarkan nilai p
+		case 1: //memasukan data baru
+			cout << "Data : ";
+			cin >> nilai;
+			push(&a, nilai);
+			cout << endl;
+			break;
+		case 2: //menampilkan Linkedlist sebelum diurut;
+			cout << "Linkedlist sebelum sort \n";
+			printList(a);
+			cout << endl;
+			_getche();
+			break;
+		case 3: //menampilkan Linkedlist setelah diurut;
+			insertionSort(&a);
+
+			cout << "Linkedlist setelah di sort \n";
+			printList(a);
+			cout << endl;
+			_getche();
+			break;
+		}
+	} while (p != 4);
 
 	return 0;
 }
